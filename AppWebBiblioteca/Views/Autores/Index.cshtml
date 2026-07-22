@@ -1,0 +1,40 @@
+﻿@using AppWebBiblioteca.Models;
+@{
+    List<Autor> autores = ViewBag.Autores;
+}
+
+<h2>Autores :)</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de nacimiento</th>
+            <th>Nacionalidad</th>
+            <th>Activo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var autor in autores)
+        {
+            <tr>
+                <td>@autor.Id</td>
+                <td>@autor.Nombre</td>
+                <td>@autor.Apellido</td>
+                <td>@autor.FechaDeNacimiento</td>
+                <td>@autor.Nacionalidad</td>
+                <td>@if (autor.EsActivo)
+                    {
+                        <span class="badge bg-success">Sí</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">No</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

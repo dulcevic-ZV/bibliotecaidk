@@ -28,6 +28,8 @@ namespace AppWebBiblioteca.Controllers
                     Available = true
                 }
             };
+            ViewBag.Nombre = "Olruggio";
+            ViewBag.Libros = libros;
             return View(libros);
         }
     }

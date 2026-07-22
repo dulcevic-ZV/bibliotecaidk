@@ -1,13 +1,46 @@
-﻿@model List<AppWebBiblioteca.Models.Libro>
+﻿@using AppWebBiblioteca.Models
+@{
+    List<Libro> libros = ViewBag.Libros;
+}
+<h1>@ViewBag.nombre</h1>
 <h2>Catálogo de Libros :)</h2>
 
-@foreach (var libro in Model)
-{
-    <tr>
-        <td>@libro.Title</td>
-        <td>@libro.Autor</td>
-        <td>@libro.Category</td>
-        <td>@libro.Price</td>
-        <td>@libro.Available</td>
-    </tr>
-}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Disponibilidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var libro in libros)
+        {
+            <tr>
+                <td>@libro.Id</td>
+                <td>@libro.Title</td>
+                <td>@libro.Autor</td>
+                <td>@libro.Category</td>
+                <td>$@libro.Price</td>
+                <td>
+                    @if (libro.Available)
+                    {
+                        <spam class="badge bg-success">Disponible</spam>
+                    }
+                    else
+                    {
+                        <spam class="badge bg-danger">Prestado</spam>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
