@@ -1,0 +1,19 @@
+﻿@model AppWebBiblioteca.Models.Libro;
+
+@{
+    ViewData["Title"] = "Detalles del libro";
+}
+
+<h1>@Model.Title</h1>
+
+<dl class="row">
+    <dt>Autor</dt>
+    <dd>@Model.Autor</dd>
+
+    <dt>Categoría</dt>
+    <dd>@Model.Category</dd>
+
+    <dt>Precio</dt>
+    <dd>@Model.Price</dd>
+</dl>
+<a asp-action="Index" class="btn btn-primary">Volver al listado</a>

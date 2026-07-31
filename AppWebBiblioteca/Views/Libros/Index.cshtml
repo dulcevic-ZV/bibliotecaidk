@@ -1,46 +1,34 @@
-﻿@using AppWebBiblioteca.Models
+﻿@model IEnumerable<AppWebBiblioteca.Models.Libro>;
 @{
-    List<Libro> libros = ViewBag.Libros;
+    ViewData["Title"] = "Listado de Libros";
 }
-<h1>@ViewBag.nombre</h1>
-<h2>Catálogo de Libros :)</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Categoría</th>
-            <th>Precio</th>
-            <th>Disponibilidad</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var libro in libros)
+<h1>@ViewData["Title"]</h1>
+
+<p>Hay @Model.Count() Libros registrados.</p> 
+
+<a class="btn btn-primary" asp-action="Create"> Nuevo libro +</a>
+
+
+<div class="row">
+    <form method="post">
+        @foreach (var libro in Model)
         {
-            <tr>
-                <td>@libro.Id</td>
-                <td>@libro.Title</td>
-                <td>@libro.Autor</td>
-                <td>@libro.Category</td>
-                <td>$@libro.Price</td>
-                <td>
-                    @if (libro.Available)
-                    {
-                        <spam class="badge bg-success">Disponible</spam>
-                    }
-                    else
-                    {
-                        <spam class="badge bg-danger">Prestado</spam>
-                    }
-
-                </td>
-            </tr>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>@libro.Title</h5>
+                        <h6>@libro.Autor</h6>
+                        <h6>@libro.Price</h6>
+                        <img src="Imagenes/libros.jpeg" alt="Sample Photo" style="width:200px;height:200px;"/>
+                        <a asp-action="Details" asp-route-id="@libro.Id">Ver</a>
+                        <button asp-action="Delete" asp-route-id="@libro.Id" class="btn btn-danger">Eliminar</button>
+                        <a asp-action="Update" asp-route-id="@libro.Id" class="btn btn-success">Editar</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
+    </form>
 
-</table>
-
-
-
+   
+</div>

@@ -1,40 +1,33 @@
-﻿@using AppWebBiblioteca.Models;
+﻿@model IEnumerable<AppWebBiblioteca.Models.Autor>;
 @{
-    List<Autor> autores = ViewBag.Autores;
+    ViewData["Title"] = "Listado de Autores";
 }
 
-<h2>Autores :)</h2>
+<h1>@ViewData["Title"]</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Fecha de nacimiento</th>
-            <th>Nacionalidad</th>
-            <th>Activo</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var autor in autores)
+<p>Hay @Model.Count() Autores registrados.</p> <!-- suma los elementos -->
+
+<a class="btn btn-primary" asp-action="Create"> Nuevo autor +</a>
+
+
+<div class="row">
+    <form method="post">
+        @foreach (var autor in Model)
         {
-            <tr>
-                <td>@autor.Id</td>
-                <td>@autor.Nombre</td>
-                <td>@autor.Apellido</td>
-                <td>@autor.FechaDeNacimiento</td>
-                <td>@autor.Nacionalidad</td>
-                <td>@if (autor.EsActivo)
-                    {
-                        <span class="badge bg-success">Sí</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger">No</span>
-                    }
-                </td>
-            </tr>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>@autor.Nombre</h5>
+                        <h6>@autor.Nacionalidad</h6>
+                        <p>Edad: @(DateTime.Now.Year - autor.FechaDeNacimiento.Year)</p>
+                        <a asp-action="Details" asp-route-id="@autor.Id">Ver</a>
+                        <button asp-action="Delete" asp-route-id="@autor.Id" class="btn btn-danger">Eliminar</button>
+                        <a asp-action="Update" asp-route-id="@autor.Id" class="btn btn-success">Editar</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </form>
+
+   
+</div>

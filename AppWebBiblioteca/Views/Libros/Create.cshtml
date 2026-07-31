@@ -1,0 +1,32 @@
+﻿@model AppWebBiblioteca.Models.Libro;
+
+@{
+    ViewData["Title"] = "Crear libro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Autor"></label>
+        <input asp-for="Autor" class="form-control" />
+        <span asp-validation-for="Autor"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Category"></label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
