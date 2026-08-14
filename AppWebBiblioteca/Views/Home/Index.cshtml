@@ -1,9 +1,155 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1>Sistema de gestión de biblioteca</h1>
-    <p>Bienvenido al sistema de gestión de biblioteca desarrollado con ASP.NET Core</p>
+﻿<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4">
+                BibliotecaWHA
+            </h1>
+            <p class="lead">
+                Bienvenida/o a la biblioteca virtual
+                BibliotecaWHA. Espero que pueda 
+                disfrutar de nuestro inmenso 
+                catálogo de libros.
+                Muchas gracias por darnos su
+                confianza.
+                :)
+            </p>
+            <a asp-controller="Home" asp-action="Acerca_de" class="btn btn-secondary">Conocer más</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="~/Imagenes/Coco witch hat atelier.jpeg" class="img-fluid rounded shadow" alt="Biblioteca" />
+        </div>
+    </div>
 </div>
 
+<br />
+<br />
+<br />
+<img src="~/Imagenes/descarga (7).jpeg" class="mx-auto d-block" />
+<br />
+<br />
+<br />
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">
+        Servicios de nuestra biblioteca.
+    </h2>
+    <div class="row">
+        <!--servicio 1 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Imagenes/descarga (4).jpeg" class="card-img-top" alt="servicio1"/>
+                <div class="card-body">
+                    <p class="card-text">Catálogo inmenso con múltiples categorías.</p>
+                </div>
+            </div>
+        </div>
+        <!--servicio 2 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Imagenes/descarga (2).jpeg" class="card-img-top" alt="servicio2" />
+                <div class="card-body">
+                    <p class="card-text">Envios a domicilio.</p>
+                </div>
+            </div>
+        </div>
+        <!--servicio 3 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Imagenes/descarga (3).jpeg" class="card-img-top" alt="servicio3" />
+                <div class="card-body">
+                    <p class="card-text">Búsqueda especializada.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<hr />
+<br />
+<br />
+<br />
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+
+
+            <h2 class="text-dark">500+</h2>
+            <p>Libros disponibles</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-dark">200+</h2>
+            <p>Autores registrados</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-dark">25+</h2>
+            <p>Categorías literarias</p>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<hr />
+<br />
+<br />
+<br />
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <h2>Observa estas nuevas incorporaciones a nuestro catálogo. </h2>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/Imagenes/grimorio.jpeg" class="mx-auto d-block w-50" alt="manga">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Imagenes/descarga (5).jpeg" class="mx-auto d-block w-50" alt="manga">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Imagenes/descarga (6).jpeg" class="mx-auto d-block w-50" alt="arte">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<img src="~/Imagenes/descarga (7).jpeg" class="mx-auto d-block" />
+<br />
+<br />
+<br />
+
+<div class="container mt-5">
+    <div class="bg-secondary text-white rounded p-5 text-center">
+        <h2>Explora nuestra biblioteca aquí:</h2>
+        <p>Tenemos múltiples opciones para distintos
+            gustos. Búscamos que tú puedas encontrar
+            lo que vaya más a corde contigo.
+        </p>
+        <a asp-controller="Home" asp-action="Acerca_de" class="btn btn-outline-light">Conocer más</a>
+    </div>
+</div>
