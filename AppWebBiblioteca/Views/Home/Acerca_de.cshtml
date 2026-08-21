@@ -65,9 +65,31 @@
 <br />
 <br />
 <hr />
+<div class="contenedor-acerca">
+    <h2 class="text-center mb-4">Más acerca de nuestra biblioteca</h2>
+    <div class="row">
+        @await Html.PartialAsync("_ServiceCard", new AppWebBiblioteca.Models.serviceCard { ImageUrl = "/Imagenes/preguntas.jpeg", Text = "Preguntas frecuentes" })
+        @await Html.PartialAsync("_ServiceCard", new AppWebBiblioteca.Models.serviceCard { ImageUrl = "/Imagenes/información.jpeg", Text = "Información sobre la biblioteca" })
+        @await Html.PartialAsync("_ServiceCard", new AppWebBiblioteca.Models.serviceCard { ImageUrl = "/Imagenes/ubicacion.jpeg", Text = "Ubicación de la biblioteca" })
+    </div>
+</div>
 <br />
+<hr />
 <br />
+<div class="Acordion-clase">
+    <h2>Algunos datos sobre la biblioteca</h2>
+    <div>
+        @await Html.PartialAsync("_AcordionService", new AppWebBiblioteca.Models.AcordionService { Titulo = "¿Cuántos años lleva funcionando?", Texto = "Llevamos 3 años otorgando nuestros servicios a nivel nacional. Desde el 2023.", Titulo2 = "¿Dónde se encuentran?"
+        ,
+            Texto2 = "Nos encontramos en la Av Independencia Sur Ent 21 y 23 Cl Ote Sta Ana No.95, San Salvador, El Salvador.",
+            Titulo3 = "¿Realizan envios internacionales?",
+            Texto3 = "Por ahora solo realizamos envios nacionales."
+        })
+
+    </div>
+</div>
 <br />
+<hr />
 <section class="team-section">
     <figure>
         <img src="~/Imagenes/qifrey.jpeg" alt="Biblioteca" />
