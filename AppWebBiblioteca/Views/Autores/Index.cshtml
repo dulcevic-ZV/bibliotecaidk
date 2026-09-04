@@ -9,6 +9,15 @@
 
 <a class="btn btn-primary" asp-action="Create"> Nuevo autor +</a>
 
+<nav class="navbar bg-body-tertiary mb-3">
+    <div class="container-fluid">
+        <form class="d-flex" role="search" asp-action="GetById" asp-controller="Autores" method="get">
+            <input name="id" class="form-control me-2" type="number" placeholder="Id del autor" aria-label="Search" />
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </div>
+</nav>
+
 
 <div class="row">
     <form method="post">

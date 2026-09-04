@@ -1,0 +1,27 @@
+﻿@model AppWebBiblioteca.Models.Autor;
+
+@if (Model == null)
+{
+    <div class="alert alert-warning">Autor no encontrado.</div>
+}
+else
+{
+    <div class="row">
+        <form asp-action="GetById" asp-route-id="Id" method="post">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Nombre</h5>
+                        <h6>Nacionalidad</h6>
+                        <p>Edad: @(DateTime.Now.Year - Model.FechaDeNacimiento.Year)</p>
+                        <h4 class="card-title">@Model.Nombre @Model.Apellido</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">@Model.Nacionalidad</h6>
+                        <p class="card-text">Fecha de nacimiento: @Model.FechaDeNacimiento.ToString("d")</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+<a class="btn btn-primary" asp-action="Index">Regresar</a>
