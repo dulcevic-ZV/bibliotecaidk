@@ -11,16 +11,6 @@ namespace AppWebBiblioteca.Controllers
             return View();
         }
 
-        public IActionResult Categorias()
-        {
-            return View();
-        }
-
-        public IActionResult Acerca_de()
-        {
-            return View();
-        }
-
         public IActionResult Usuarios()
         {
             return View();

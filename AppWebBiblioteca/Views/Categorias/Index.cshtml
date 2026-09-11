@@ -1,0 +1,78 @@
+﻿@model IEnumerable<AppWebBiblioteca.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorías";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Listado de categorías</h2>
+</div>
+
+<a asp-action="Create" asp-controller="Categorias" class="btn btn-primary">Agregar</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.ID</td>
+                <td>@categoria.Nombre</td>
+                <td>@categoria.Descripcion</td>
+                <td><a asp-action="Update" asp-controller="Categorias" asp-route-id="@categoria.ID" class="btn btn-light">Actualizar</a></td>
+                <td>
+                    <form asp-action="Delete" method="post" asp-route-id="@categoria.ID" onsubmit="return confirmarEliminacion(event, this)">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+            
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        var mensaje = '@(TempData["SuccessMessage"] ?? "")'
+        if(mensaje){
+            Swal.fire({
+                icon: 'succes',
+                title: 'Éxito',
+                text: mensaje,
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    </script>
+
+    <script>
+        function confirmarEliminacion(event, form) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+        });
+        return false;
+        }
+    </script>
+}
