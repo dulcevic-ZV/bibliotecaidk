@@ -1,5 +1,7 @@
 using AppWebBiblioteca.Controllers;
 using AppWebBiblioteca.Repositories;
+using AppWebBiblioteca.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IRepositorioLibro, RepositorioMemoriaLibros>();
+builder.Services.AddDbContext<BibliotecaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotecaDB")));
+
 builder.Services.AddSingleton<IAutorService, AutorService>();
 
 var app = builder.Build();

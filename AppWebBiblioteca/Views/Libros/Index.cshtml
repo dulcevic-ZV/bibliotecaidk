@@ -1,34 +1,30 @@
-﻿@model IEnumerable<AppWebBiblioteca.Models.Libro>;
+﻿ @model IEnumerable<AppWebBiblioteca.Models.Libro>;
 @{
     ViewData["Title"] = "Listado de Libros";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="Listado-libros">@ViewData["Title"]</h1>
 
 <p>Hay @Model.Count() Libros registrados.</p> 
 
-<a class="btn btn-primary" asp-action="Create"> Nuevo libro +</a>
+<a class="boton-libros btn btn-primary" asp-action="Create"> Nuevo libro +</a>
 
 
-<div class="row">
-    <form method="post">
-        @foreach (var libro in Model)
-        {
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5>@libro.Title</h5>
-                        <h6>@libro.Autor</h6>
-                        <h6>@libro.Price</h6>
-                        <img src="Imagenes/libros.jpeg" alt="Sample Photo" style="width:200px;height:200px;"/>
-                        <a asp-action="Details" asp-route-id="@libro.Id">Ver</a>
-                        <button asp-action="Delete" asp-route-id="@libro.Id" class="btn btn-danger">Eliminar</button>
-                        <a asp-action="Update" asp-route-id="@libro.Id" class="btn btn-success">Editar</a>
-                    </div>
-                </div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    @foreach (var libro in Model)
+    {
+        <div class="tarjeta-libro card h-100 shadow-sm product-car">
+            <div class="card-body d-flex flex-column">
+                <img src="@libro.Imagen" alt="Sample Photo" style="height: 200px; object-fit: contain;" />
+                <h5 class="card-title text-center">@libro.Title</h5>
+                <p class="card-text text-muted small flex-grow-1"> Autor: @libro.Autor</p>
+                <p class="card-text text-muted small flex-grow-1"> Precio: @libro.Price</p>
+                <a asp-action="Details" class="btn btn-secondary" asp-route-id="@libro.Id">Ver</a>
             </div>
-        }
-    </form>
-
-   
+        </div>
+    }
 </div>
+
+<br />
+<br />
+<br />

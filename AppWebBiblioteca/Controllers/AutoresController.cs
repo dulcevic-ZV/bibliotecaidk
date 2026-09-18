@@ -1,37 +1,52 @@
 ﻿using AppWebBiblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
+using AppWebBiblioteca.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppWebBiblioteca.Controllers
 {
     public class AutoresController : Controller
     {
-        private readonly IAutorService _service;
-        public AutoresController(IAutorService service)
+        private readonly BibliotecaContext _context;
+        public AutoresController(BibliotecaContext context)
         {
-            _service = service;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var autor = _service.ObtenerAutores(); 
-            return View(autor);
+            var autores = await _context.Autores.ToListAsync();
+            return View(autores);
         }
 
-        [HttpGet]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var autorId = _service.ObtenerPorId(id);
-            if (autorId == null)
+            var autor = await _context.Autores.FindAsync(id);
+
+            if (autor == null)
             {
                 return NotFound();
             }
-            return View(autorId);
+
+            return View(autor);
         }
 
-        public IActionResult Create(Autor autor)
+        public IActionResult Create()
         {
-            var autorCrear = _service.CreateAutor(autor);
-            return View(autorCrear);
+            return View();
+        }
+
+        public async Task<IActionResult> Create(Autor autor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(autor);
+            }
+
+            _context.Autores.Add(autor);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

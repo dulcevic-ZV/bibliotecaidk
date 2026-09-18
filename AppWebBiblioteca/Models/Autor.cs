@@ -10,14 +10,12 @@ namespace AppWebBiblioteca.Models
 
         [StringLength(100)]
         public string Nombre { get; set; }
-        public string Apellido { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime FechaDeNacimiento { get; set; }
 
         [StringLength(50)]
         public string Nacionalidad { get; set; }
-        public bool EsActivo { get; set; }
 
     }
 }

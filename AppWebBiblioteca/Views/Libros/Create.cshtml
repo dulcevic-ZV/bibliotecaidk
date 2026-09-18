@@ -4,7 +4,7 @@
     ViewData["Title"] = "Crear libro";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="Crear-libros">@ViewData["Title"]</h1>
 
 <form asp-action="Create" method="post">
     <div class="mb-3">
@@ -23,10 +23,15 @@
         <span asp-validation-for="Category"></span>
     </div>
     <div class="mb-3">
+        <label asp-for="Imagen"></label>
+        <input asp-for="Imagen" class="form-control" />
+        <span asp-validation-for="Imagen"></span>
+    </div>
+    <div class="mb-3">
         <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price"></span>
     </div>
-    <button type="submit" class="btn btn-success">Crear</button>
+    <button type="submit" class="btn btn-light">Crear</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
