@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AppWebBiblioteca.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AppWebBiblioteca.Controllers
 {
@@ -36,6 +37,9 @@ namespace AppWebBiblioteca.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create(Autor autor)
         {
             if (!ModelState.IsValid)
@@ -48,5 +52,57 @@ namespace AppWebBiblioteca.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var autor = await _context.Autores.FindAsync(id);
+            if (autor == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Edit(int id, Autor autor)
+        {
+
+            if (id != autor.Id)
+            {
+                return BadRequest("No existe el autor");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(autor);
+            }
+
+            var exist = await _context.Autores.AnyAsync(a => a.Id == id);
+            if (!exist)
+            {
+                return NotFound("No existe");
+            }
+            _context.Update(autor);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var autor = await _context.Autores.FindAsync(id);
+            if (autor == null)
+            {
+                return NotFound();
+            }
+
+            _context.Autores.Remove(autor);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
+

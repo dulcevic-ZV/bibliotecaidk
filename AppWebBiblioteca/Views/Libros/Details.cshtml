@@ -4,16 +4,32 @@
     ViewData["Title"] = "Detalles del libro";
 }
 
-<h1>@Model.Title</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+      
+        <h2 class="card-title mb-4">@Model.Title</h2>
+        <img src="@Model.Imagen" alt="imagen" class="card-img mb-4" style="width:100%" />
+     
+        <dl class="row">
+            <dt class="col-sm-4">Autor</dt>
+            <dd class="col-sm-8">@Model.Autor</dd>
 
-<dl class="row">
-    <dt>Autor</dt>
-    <dd>@Model.Autor</dd>
+            <dt class="col-sm-4">Categoría</dt>
+            <dd class="col-sm-8">@Model.Category</dd>
 
-    <dt>Categoría</dt>
-    <dd>@Model.Category</dd>
+            <dt class="col-sm-4">Precio</dt>
+            <dd class ="col-sm-8">@Model.Price</dd>
+        </dl>
 
-    <dt>Precio</dt>
-    <dd>@Model.Price</dd>
-</dl>
-<a asp-action="Index" class="btn btn-primary">Volver al listado</a>
+        <div class="d-flex gap-2">
+            <a asp-action="Index" class="btn btn-outline-secondary ms-auto">Volver al listado</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary swal-edit-link">Editar</a>
+            <form asp-action="Delete" method="post" asp-route-id="@Model.Id" class="swal-delete-form d-inline">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
