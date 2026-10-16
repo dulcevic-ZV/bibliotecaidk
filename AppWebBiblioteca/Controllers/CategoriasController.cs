@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AppWebBiblioteca.Models;
+﻿using AppWebBiblioteca.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
 namespace AppWebBiblioteca.Controllers
 {
+    [Authorize]
     public class CategoriasController : Controller
     {
         private readonly string _connectionString;

@@ -3,9 +3,11 @@ using AppWebBiblioteca.Models;
 using AppWebBiblioteca.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AppWebBiblioteca.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppWebBiblioteca.Controllers
 {
+    [Authorize]
     public class LibrosController : Controller
     {
         private readonly BibliotecaContext _context;

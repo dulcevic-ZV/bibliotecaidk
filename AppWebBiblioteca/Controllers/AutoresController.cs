@@ -1,11 +1,14 @@
 ﻿using AppWebBiblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
 using AppWebBiblioteca.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AppWebBiblioteca.Controllers
 {
+
+    [Authorize]
     public class AutoresController : Controller
     {
         private readonly BibliotecaContext _context;
