@@ -23,11 +23,16 @@
 
         <div class="d-flex gap-2">
             <a asp-action="Index" class="btn btn-outline-secondary ms-auto">Volver al listado</a>
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary swal-edit-link">Editar</a>
-            <form asp-action="Delete" method="post" asp-route-id="@Model.Id" class="swal-delete-form d-inline">
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">Eliminar</button>
-            </form>
+
+            @if (User.IsInRole("Admin") || User.IsInRole("Bibliotecario"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary swal-edit-link">Editar</a>
+                <form asp-action="Delete" method="post" asp-route-id="@Model.Id" class="swal-delete-form d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            }
+       
         </div>
     </div>
 

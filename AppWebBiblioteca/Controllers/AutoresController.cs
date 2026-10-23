@@ -35,6 +35,7 @@ namespace AppWebBiblioteca.Controllers
             return View(autor);
         }
 
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public IActionResult Create()
         {
             return View();
@@ -43,6 +44,7 @@ namespace AppWebBiblioteca.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Create(Autor autor)
         {
             if (!ModelState.IsValid)
@@ -56,6 +58,8 @@ namespace AppWebBiblioteca.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Edit(int id)
         {
             var autor = await _context.Autores.FindAsync(id);
@@ -69,6 +73,7 @@ namespace AppWebBiblioteca.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Edit(int id, Autor autor)
         {
 
@@ -94,6 +99,7 @@ namespace AppWebBiblioteca.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var autor = await _context.Autores.FindAsync(id);

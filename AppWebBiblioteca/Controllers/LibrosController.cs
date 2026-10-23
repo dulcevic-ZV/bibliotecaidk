@@ -35,13 +35,15 @@ namespace AppWebBiblioteca.Controllers
             return View(libro);
         }
 
-
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Create(Libro libro)
         {
             if (!ModelState.IsValid)
@@ -55,6 +57,8 @@ namespace AppWebBiblioteca.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Edit(int id)
         {
             var libro = await _context.Libros.FindAsync(id);
@@ -67,7 +71,7 @@ namespace AppWebBiblioteca.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Edit(int id, Libro libro)
         {
             if (id != libro.Id)
@@ -91,7 +95,7 @@ namespace AppWebBiblioteca.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "Admin, Bibliotecario")]
         public async Task<IActionResult> Delete(int id)
         {
             var libro = await _context.Libros.FindAsync(id);
