@@ -1,8 +1,10 @@
-﻿namespace AppWebBiblioteca.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace AppWebBiblioteca.Models
 {
     public class UsuarioRol
     {
-        public string UserId { get; set; }
-        public string Email { get; set; }
+        public IdentityRole Role { get; set; } = null!;
+        public IList<IdentityUser> Users { get; set; } = new List<IdentityUser>();
     }
 }

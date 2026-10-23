@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AppWebBiblioteca.Models.UsuarioRol>
+
+<h1 class="mb-5">Gestión de Roles</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Roles</th>
+            <th>Cantidad de usuarios</th>
+            <th>Gestionar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rol in Model)
+        {
+            <tr>
+                <td>
+                    <p>@rol.Role.Name</p>
+                </td>
+                <td>
+                    <small class="text-muted">(@rol.Users.Count()) Usuarios</small>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@rol.Role.Id" class="btn btn-primary">
+                        Ver usuarios
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
