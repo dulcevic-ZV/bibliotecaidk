@@ -9,39 +9,51 @@ namespace AppWebBiblioteca.Controllers
     public class CategoriasController : Controller
     {
         private readonly string _connectionString;
-        public CategoriasController(IConfiguration configuration)
+        private readonly ILogger<CategoriasController> _logger;
+        public CategoriasController(IConfiguration configuration, ILogger<CategoriasController> logger)
         {
             _connectionString = configuration.GetConnectionString("BibliotecaDB");
+            _logger = logger;
         }
         public IActionResult Index()
         {
-            var categorias = new List<Categoria>();
-            using (var conexion = new SqlConnection(_connectionString))
+            _logger.LogInformation("Consultando listado de categorías");
+            try
             {
-                var sql = "SELECT ID, Nombre, Descripcion FROM Categorias";
-                using (var comando = new SqlCommand(sql, conexion))
+                var categorias = new List<Categoria>();
+                using (var conexion = new SqlConnection(_connectionString))
                 {
-                    conexion.Open();
-                    using (var lector = comando.ExecuteReader())
+                    var sql = "SELECT ID, Nombre, Descripcion FROM Categorias";
+                    using (var comando = new SqlCommand(sql, conexion))
                     {
-                        while (lector.Read())
+                        conexion.Open();
+                        using (var lector = comando.ExecuteReader())
                         {
-                            categorias.Add(new Categoria
+                            while (lector.Read())
                             {
-                                ID = lector.GetInt32(0),
-                                Nombre = lector.GetString(1),
-                                Descripcion = lector.IsDBNull(2) ? null : lector.GetString(2),
-                            });
+                                categorias.Add(new Categoria
+                                {
+                                    ID = lector.GetInt32(0),
+                                    Nombre = lector.GetString(1),
+                                    Descripcion = lector.IsDBNull(2) ? null : lector.GetString(2),
+                                });
+                            }
                         }
                     }
                 }
+                return View(categorias);
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se ha producido una excepción al traer el listado de categorías");
+                throw;
             }
           
-            return View(categorias);
+           
         }
 
         public IActionResult Create()
         {
+            _logger.LogInformation("Iniciando la creación de una nueva categoría");
             return View();
         }
 
@@ -50,97 +62,131 @@ namespace AppWebBiblioteca.Controllers
 
         public IActionResult Create(Categoria categoria)
         {
+            _logger.LogInformation("Creando una nueva categoría");
             if (categoria==null || string.IsNullOrWhiteSpace(categoria.Nombre))
             {
+                _logger.LogWarning("Existen datos nulos");
                 ModelState.AddModelError("Nombre", "El nombre es obligatorio");
                 return View(categoria);
             }
-
-            using (var conexion = new SqlConnection(_connectionString))
+            try
             {
-                var sql = "INSERT INTO Categorias(Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
-                using (var comando = new SqlCommand(sql, conexion))
-                {
-                    comando.Parameters.AddWithValue("@Nombre", categoria.Nombre);
-                    comando.Parameters.AddWithValue("@Descripcion", (object)categoria.Descripcion ?? System.DBNull.Value);
 
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
+                using (var conexion = new SqlConnection(_connectionString))
+                {
+                    var sql = "INSERT INTO Categorias(Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
+                    using (var comando = new SqlCommand(sql, conexion))
+                    {
+                        comando.Parameters.AddWithValue("@Nombre", categoria.Nombre);
+                        comando.Parameters.AddWithValue("@Descripcion", (object)categoria.Descripcion ?? System.DBNull.Value);
+
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                    }
                 }
+                TempData["SuccessMessage"] = "Categoría guardada correctamente";
+                return RedirectToAction("Index");
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ha ocurrido una excepción");
+                throw;
             }
-            TempData["SuccessMessage"] = "Categoría guardada correctamente";
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
 
-            Categoria categoria = new Categoria();
-
-            using (var conexion = new SqlConnection(_connectionString))
+            _logger.LogInformation("Iniciando la edición de una categoría");
+            try
             {
-                var sql = "SELECT ID, Nombre, Descripcion FROM Categorias WHERE ID = @id";
-                using (var comando = new SqlCommand(sql, conexion))
+                Categoria categoria = new Categoria();
+
+                using (var conexion = new SqlConnection(_connectionString))
                 {
-                    comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
-                    conexion.Open();
-                    using (var lector = comando.ExecuteReader())
+                    var sql = "SELECT ID, Nombre, Descripcion FROM Categorias WHERE ID = @id";
+                    using (var comando = new SqlCommand(sql, conexion))
                     {
-                        if (lector.Read())
+                        comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+                        conexion.Open();
+                        using (var lector = comando.ExecuteReader())
                         {
-                            categoria.ID = lector.GetInt32(lector.GetOrdinal("ID"));
-                            categoria.Nombre = lector.GetString(lector.GetOrdinal("Nombre"));
-                            categoria.Descripcion = lector.IsDBNull(lector.GetOrdinal("Descripcion")) ? null : lector.GetString(lector.GetOrdinal("Descripcion"));
+                            if (lector.Read())
+                            {
+                                categoria.ID = lector.GetInt32(lector.GetOrdinal("ID"));
+                                categoria.Nombre = lector.GetString(lector.GetOrdinal("Nombre"));
+                                categoria.Descripcion = lector.IsDBNull(lector.GetOrdinal("Descripcion")) ? null : lector.GetString(lector.GetOrdinal("Descripcion"));
+                            }
                         }
                     }
                 }
-            }
 
-            return View(categoria);
+                return View(categoria);
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ha ocurrido una excepción durante la obtención de la edición de categorías");
+                throw;
+            }
         }
 
         [HttpPost]
 
         public IActionResult Update(Categoria categoria, int id)
         {
+            _logger.LogInformation("Editando una categoría");
             if (categoria == null || string.IsNullOrWhiteSpace(categoria.Nombre))
             {
+                _logger.LogWarning("Existen datos nulos");
                 ModelState.AddModelError("Nombre", "El nombre es obligatorio");
                 return View(categoria);
             }
 
-            using (var conexion = new SqlConnection(_connectionString))
+            try
             {
-                var sql = "UPDATE Categorias SET Nombre = @Nombre, Descripcion = @Descripcion WHERE ID = @id";
-                using (SqlCommand comando = new SqlCommand(sql, conexion) )
+                using (var conexion = new SqlConnection(_connectionString))
                 {
-                    comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = categoria.ID;
-                    comando.Parameters.AddWithValue("@Nombre", categoria.Nombre) ;
-                    comando.Parameters.AddWithValue("@Descripcion", (object)categoria.Descripcion ?? System.DBNull.Value);
+                    var sql = "UPDATE Categorias SET Nombre = @Nombre, Descripcion = @Descripcion WHERE ID = @id";
+                    using (SqlCommand comando = new SqlCommand(sql, conexion))
+                    {
+                        comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = categoria.ID;
+                        comando.Parameters.AddWithValue("@Nombre", categoria.Nombre);
+                        comando.Parameters.AddWithValue("@Descripcion", (object)categoria.Descripcion ?? System.DBNull.Value);
 
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                    }
                 }
-            }
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ha ocurrido una excepción durante la edición de categorías");
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            using (var conexion = new SqlConnection(_connectionString))
+            _logger.LogInformation("Iniciando la eliminación de una categoría");
+            try
             {
-                var sql = "DELETE FROM Categorias WHERE ID=@id";
-                using (var comando = new SqlCommand(sql, conexion))
+                using (var conexion = new SqlConnection(_connectionString))
                 {
-                    comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
+                    var sql = "DELETE FROM Categorias WHERE ID=@id";
+                    using (var comando = new SqlCommand(sql, conexion))
+                    {
+                        comando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                    }
                 }
+                return RedirectToAction("Index");
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocurrió un problema durante la eliminación de un libro");
+                throw;
             }
-            return RedirectToAction("Index");
         }
     }
 }
