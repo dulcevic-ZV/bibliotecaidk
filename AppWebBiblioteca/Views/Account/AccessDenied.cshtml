@@ -2,8 +2,15 @@
     ViewData["Title"] = "Acceso denegado";
 }
 
-<div class="text-center">
-    <h1 class="text-danger"> Acceso denegado</h1>
-    <p>No tienes permisos para acceder a este recurso</p>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Volver al inicio</a>
+<div class="card">
+    <div class="card-body">
+        <div class="text-center">
+            <h1 class="text-danger fs-5xl fw-bold"> Acceso denegado</h1>
+            <br />
+            <img src="~/Imagenes/descarga.jpeg/" class="img-fluid" alt="cat" style="width:20%;">
+            <br />
+            <p class="font-monospace mb-5">¡No tienes permisos para acceder a este recurso!</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary"> Volver al inicio</a>
+        </div>
+    </div>
 </div>

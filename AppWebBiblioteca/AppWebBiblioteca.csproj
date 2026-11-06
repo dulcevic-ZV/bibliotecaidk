@@ -20,4 +20,8 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Página de error\" />
+	</ItemGroup>
+
 </Project>
